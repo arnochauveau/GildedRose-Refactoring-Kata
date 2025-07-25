@@ -6,7 +6,11 @@ pub struct Item {
 }
 
 impl Item {
-    pub fn new(name: impl Into<String>, sell_in: i32, quality: i32) -> Item {
+    pub fn new(
+        name: impl Into<String>,
+        sell_in: i32,
+        quality: i32,
+    ) -> Item {
         Item {
             name: name.into(),
             sell_in,
@@ -16,7 +20,10 @@ impl Item {
 }
 
 impl Display for Item {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+    fn fmt(
+        &self,
+        f: &mut fmt::Formatter<'_>,
+    ) -> fmt::Result {
         write!(f, "{}, {}, {}", self.name, self.sell_in, self.quality)
     }
 }
@@ -32,7 +39,9 @@ impl GildedRose {
 
     pub fn update_quality(&mut self) {
         for i in 0..self.items.len() {
-            if self.items[i].name != "Aged Brie" && self.items[i].name != "Backstage passes to a TAFKAL80ETC concert"
+            if self.items[i].name != "Aged Brie"
+                && self.items[i].name
+                    != "Backstage passes to a TAFKAL80ETC concert"
             {
                 if self.items[i].quality > 0 {
                     if self.items[i].name != "Sulfuras, Hand of Ragnaros" {
@@ -43,16 +52,20 @@ impl GildedRose {
                 if self.items[i].quality < 50 {
                     self.items[i].quality = self.items[i].quality + 1;
 
-                    if self.items[i].name == "Backstage passes to a TAFKAL80ETC concert" {
+                    if self.items[i].name
+                        == "Backstage passes to a TAFKAL80ETC concert"
+                    {
                         if self.items[i].sell_in < 11 {
                             if self.items[i].quality < 50 {
-                                self.items[i].quality = self.items[i].quality + 1;
+                                self.items[i].quality =
+                                    self.items[i].quality + 1;
                             }
                         }
 
                         if self.items[i].sell_in < 6 {
                             if self.items[i].quality < 50 {
-                                self.items[i].quality = self.items[i].quality + 1;
+                                self.items[i].quality =
+                                    self.items[i].quality + 1;
                             }
                         }
                     }
@@ -65,14 +78,20 @@ impl GildedRose {
 
             if self.items[i].sell_in < 0 {
                 if self.items[i].name != "Aged Brie" {
-                    if self.items[i].name != "Backstage passes to a TAFKAL80ETC concert" {
+                    if self.items[i].name
+                        != "Backstage passes to a TAFKAL80ETC concert"
+                    {
                         if self.items[i].quality > 0 {
-                            if self.items[i].name != "Sulfuras, Hand of Ragnaros" {
-                                self.items[i].quality = self.items[i].quality - 1;
+                            if self.items[i].name
+                                != "Sulfuras, Hand of Ragnaros"
+                            {
+                                self.items[i].quality =
+                                    self.items[i].quality - 1;
                             }
                         }
                     } else {
-                        self.items[i].quality = self.items[i].quality - self.items[i].quality;
+                        self.items[i].quality =
+                            self.items[i].quality - self.items[i].quality;
                     }
                 } else {
                     if self.items[i].quality < 50 {
@@ -94,6 +113,6 @@ mod tests {
         let mut rose = GildedRose::new(items);
         rose.update_quality();
 
-        assert_eq!("fixme", rose.items[0].name);
+        assert_eq!("foo", rose.items[0].name);
     }
 }
