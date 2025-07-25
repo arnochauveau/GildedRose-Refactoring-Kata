@@ -17,7 +17,6 @@ fn main() {
     ];
     let mut rose = GildedRose::new(items);
 
-    println!("OMGHAI!");
     for i in 0..=30 {
         println!("-------- day {} --------", i);
         println!("name, sellIn, quality");
