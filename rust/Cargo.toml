@@ -1,5 +1,5 @@
 [package]
-name = "rust"
+name = "gilded_rose_rust"
 version = "0.2.0"
 authors = ["Michael Gerhaeuser <michael.gerhaeuser@gmail.com>", "rrokkam <rohithrokkam@gmail.com>"]
 edition = "2018"

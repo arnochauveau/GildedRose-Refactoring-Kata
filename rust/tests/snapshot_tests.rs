@@ -6,6 +6,6 @@ mod snapshot_tests {
 
     #[test]
     fn test_snapshot() {
-        assert_cmd_snapshot!(Command::new(get_cargo_bin("rust")));
+        assert_cmd_snapshot!(Command::new(get_cargo_bin("gilded_rose_rust")));
     }
 }
