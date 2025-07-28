@@ -1,6 +1,7 @@
 mod gildedrose;
 
-use gildedrose::{GildedRose, Item};
+use gildedrose::item::Item;
+use gildedrose::GildedRose;
 
 fn main() {
     let items = vec![
