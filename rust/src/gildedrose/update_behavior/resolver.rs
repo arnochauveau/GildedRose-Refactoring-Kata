@@ -1,7 +1,8 @@
 use crate::gildedrose::update_behavior::{
     aged_brie_behavior::AgedBrieBehavior,
     backstage_pass_behavior::BackstagePassBehavior,
-    legacy_behavior::LegacyBehavior, UpdateBehavior,
+    legacy_behavior::LegacyBehavior,
+    legendary_item_behavior::LegendaryItemBehavior, UpdateBehavior,
 };
 
 use super::Item;
@@ -12,6 +13,7 @@ pub fn resolve_update_behavior(item: &Item) -> Box<dyn UpdateBehavior> {
         "Backstage passes to a TAFKAL80ETC concert" => {
             Box::new(BackstagePassBehavior {})
         }
+        "Sulfuras, Hand of Ragnaros" => Box::new(LegendaryItemBehavior {}),
         _ => Box::new(LegacyBehavior {}),
     }
 }

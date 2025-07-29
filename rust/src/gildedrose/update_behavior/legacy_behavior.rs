@@ -9,20 +9,14 @@ impl UpdateBehavior for LegacyBehavior {
     ) -> Item {
         let mut owned_item = item.clone();
         if owned_item.quality > 0 {
-            if owned_item.name != "Sulfuras, Hand of Ragnaros" {
-                owned_item.quality = owned_item.quality - 1;
-            }
+            owned_item.quality = owned_item.quality - 1;
         }
 
-        if owned_item.name != "Sulfuras, Hand of Ragnaros" {
-            owned_item.sell_in = owned_item.sell_in - 1;
-        }
+        owned_item.sell_in = owned_item.sell_in - 1;
 
         if owned_item.sell_in < 0 {
             if owned_item.quality > 0 {
-                if owned_item.name != "Sulfuras, Hand of Ragnaros" {
-                    owned_item.quality = owned_item.quality - 1;
-                }
+                owned_item.quality = owned_item.quality - 1;
             }
         }
         owned_item
@@ -67,15 +61,5 @@ mod legacy_behavior_tests {
 
         assert_eq!(result.sell_in, 1);
         assert_eq!(result.quality, 0);
-    }
-
-    #[test]
-    fn legendary_items_stay_80_quality_and_dont_change_sellin() {
-        let behavior = LegacyBehavior {};
-        let result =
-            behavior.update(&Item::new("Sulfuras, Hand of Ragnaros", 4, 80));
-
-        assert_eq!(result.sell_in, 4);
-        assert_eq!(result.quality, 80);
     }
 }

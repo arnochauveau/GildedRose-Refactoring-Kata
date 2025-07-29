@@ -3,6 +3,7 @@ pub mod resolver;
 pub mod aged_brie_behavior;
 pub mod backstage_pass_behavior;
 pub mod legacy_behavior;
+pub mod legendary_item_behavior;
 
 use super::Item;
 
