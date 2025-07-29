@@ -8,9 +8,7 @@ impl UpdateBehavior for LegacyBehavior {
         item: &Item,
     ) -> Item {
         let mut owned_item = item.clone();
-        if owned_item.name != "Aged Brie"
-            && owned_item.name != "Backstage passes to a TAFKAL80ETC concert"
-        {
+        if owned_item.name != "Backstage passes to a TAFKAL80ETC concert" {
             if owned_item.quality > 0 {
                 if owned_item.name != "Sulfuras, Hand of Ragnaros" {
                     owned_item.quality = owned_item.quality - 1;
@@ -43,23 +41,14 @@ impl UpdateBehavior for LegacyBehavior {
         }
 
         if owned_item.sell_in < 0 {
-            if owned_item.name != "Aged Brie" {
-                if owned_item.name
-                    != "Backstage passes to a TAFKAL80ETC concert"
-                {
-                    if owned_item.quality > 0 {
-                        if owned_item.name != "Sulfuras, Hand of Ragnaros" {
-                            owned_item.quality = owned_item.quality - 1;
-                        }
+            if owned_item.name != "Backstage passes to a TAFKAL80ETC concert" {
+                if owned_item.quality > 0 {
+                    if owned_item.name != "Sulfuras, Hand of Ragnaros" {
+                        owned_item.quality = owned_item.quality - 1;
                     }
-                } else {
-                    owned_item.quality =
-                        owned_item.quality - owned_item.quality;
                 }
             } else {
-                if owned_item.quality < 50 {
-                    owned_item.quality = owned_item.quality + 1;
-                }
+                owned_item.quality = owned_item.quality - owned_item.quality;
             }
         }
         owned_item
@@ -104,42 +93,6 @@ mod legacy_behavior_tests {
 
         assert_eq!(result.sell_in, 1);
         assert_eq!(result.quality, 0);
-    }
-
-    #[test]
-    fn aged_brie_increases_in_quality() {
-        let behavior = LegacyBehavior {};
-        let result = behavior.update(&Item::new("Aged Brie", 2, 2));
-
-        assert_eq!(result.sell_in, 1);
-        assert_eq!(result.quality, 3);
-    }
-
-    #[test]
-    fn aged_brie_double_increases_in_quality_sellin_zero() {
-        let behavior = LegacyBehavior {};
-        let result = behavior.update(&Item::new("Aged Brie", 0, 2));
-
-        assert_eq!(result.sell_in, -1);
-        assert_eq!(result.quality, 4);
-    }
-
-    #[test]
-    fn aged_brie_double_increases_in_quality_sellin_lower_than_zero() {
-        let behavior = LegacyBehavior {};
-        let result = behavior.update(&Item::new("Aged Brie", -1, 2));
-
-        assert_eq!(result.sell_in, -2);
-        assert_eq!(result.quality, 4);
-    }
-
-    #[test]
-    fn aged_brie_quality_doesnt_go_above_50() {
-        let behavior = LegacyBehavior {};
-        let result = behavior.update(&Item::new("Aged Brie", 4, 50));
-
-        assert_eq!(result.sell_in, 3);
-        assert_eq!(result.quality, 50);
     }
 
     #[test]
