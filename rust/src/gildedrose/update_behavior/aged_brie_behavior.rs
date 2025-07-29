@@ -1,6 +1,8 @@
 use std::cmp::min;
 
-use crate::gildedrose::{item::Item, update_behavior::UpdateBehavior};
+use crate::gildedrose::{
+    config::CONFIG, item::Item, update_behavior::UpdateBehavior,
+};
 
 pub static AGED_BRIE_BEHAVIOR: AgedBrieBehavior = AgedBrieBehavior {};
 pub struct AgedBrieBehavior;
@@ -17,7 +19,8 @@ impl UpdateBehavior for AgedBrieBehavior {
             1.. => 1,
         };
 
-        owned_item.quality = min(50, owned_item.quality + increase_amount);
+        owned_item.quality =
+            min(owned_item.quality + increase_amount, CONFIG.max_quality);
         owned_item.sell_in -= 1;
 
         owned_item

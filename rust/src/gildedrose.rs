@@ -1,3 +1,4 @@
+pub mod config;
 pub mod item;
 pub mod update_behavior;
 

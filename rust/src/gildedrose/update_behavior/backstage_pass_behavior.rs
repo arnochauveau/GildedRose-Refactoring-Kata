@@ -1,6 +1,8 @@
 use std::cmp::min;
 
-use crate::gildedrose::{item::Item, update_behavior::UpdateBehavior};
+use crate::gildedrose::{
+    config::CONFIG, item::Item, update_behavior::UpdateBehavior,
+};
 
 pub static BACKSTAGE_PASS_BEHAVIOR: BackstagePassBehavior =
     BackstagePassBehavior {};
@@ -22,7 +24,7 @@ impl UpdateBehavior for BackstagePassBehavior {
 
         owned_item.quality = match amount_to_increase_option {
             Some(amount_to_increase) => {
-                min(owned_item.quality + amount_to_increase, 50)
+                min(owned_item.quality + amount_to_increase, CONFIG.max_quality)
             }
             None => 0,
         };
