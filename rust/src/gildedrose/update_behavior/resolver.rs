@@ -1,6 +1,7 @@
 use crate::gildedrose::update_behavior::{
     aged_brie_behavior::AgedBrieBehavior,
     backstage_pass_behavior::BackstagePassBehavior,
+    conjured_item_behavior::ConjuredItemBehavior,
     default_behavior::DefaultBehavior,
     legendary_item_behavior::LegendaryItemBehavior, UpdateBehavior,
 };
@@ -14,6 +15,7 @@ pub fn resolve_update_behavior(item: &Item) -> Box<dyn UpdateBehavior> {
             Box::new(BackstagePassBehavior {})
         }
         "Sulfuras, Hand of Ragnaros" => Box::new(LegendaryItemBehavior {}),
+        "Conjured Mana Cake" => Box::new(ConjuredItemBehavior {}),
 
         _ => Box::new(DefaultBehavior {}),
     }
