@@ -8,31 +8,9 @@ impl UpdateBehavior for LegacyBehavior {
         item: &Item,
     ) -> Item {
         let mut owned_item = item.clone();
-        if owned_item.name != "Backstage passes to a TAFKAL80ETC concert" {
-            if owned_item.quality > 0 {
-                if owned_item.name != "Sulfuras, Hand of Ragnaros" {
-                    owned_item.quality = owned_item.quality - 1;
-                }
-            }
-        } else {
-            if owned_item.quality < 50 {
-                owned_item.quality = owned_item.quality + 1;
-
-                if owned_item.name
-                    == "Backstage passes to a TAFKAL80ETC concert"
-                {
-                    if owned_item.sell_in < 11 {
-                        if owned_item.quality < 50 {
-                            owned_item.quality = owned_item.quality + 1;
-                        }
-                    }
-
-                    if owned_item.sell_in < 6 {
-                        if owned_item.quality < 50 {
-                            owned_item.quality = owned_item.quality + 1;
-                        }
-                    }
-                }
+        if owned_item.quality > 0 {
+            if owned_item.name != "Sulfuras, Hand of Ragnaros" {
+                owned_item.quality = owned_item.quality - 1;
             }
         }
 
@@ -41,14 +19,10 @@ impl UpdateBehavior for LegacyBehavior {
         }
 
         if owned_item.sell_in < 0 {
-            if owned_item.name != "Backstage passes to a TAFKAL80ETC concert" {
-                if owned_item.quality > 0 {
-                    if owned_item.name != "Sulfuras, Hand of Ragnaros" {
-                        owned_item.quality = owned_item.quality - 1;
-                    }
+            if owned_item.quality > 0 {
+                if owned_item.name != "Sulfuras, Hand of Ragnaros" {
+                    owned_item.quality = owned_item.quality - 1;
                 }
-            } else {
-                owned_item.quality = owned_item.quality - owned_item.quality;
             }
         }
         owned_item
@@ -103,99 +77,5 @@ mod legacy_behavior_tests {
 
         assert_eq!(result.sell_in, 4);
         assert_eq!(result.quality, 80);
-    }
-
-    #[test]
-    fn backstage_pass_quality_should_increase_by_1_when_sellin_is_larger_than_10(
-    ) {
-        let behavior = LegacyBehavior {};
-        let result = behavior.update(&Item::new(
-            "Backstage passes to a TAFKAL80ETC concert",
-            11,
-            0,
-        ));
-
-        assert_eq!(result.sell_in, 10);
-        assert_eq!(result.quality, 1);
-    }
-
-    #[test]
-    fn backstage_pass_quality_should_increase_by_2_when_sellin_is_10() {
-        let behavior = LegacyBehavior {};
-        let result = behavior.update(&Item::new(
-            "Backstage passes to a TAFKAL80ETC concert",
-            10,
-            0,
-        ));
-
-        assert_eq!(result.sell_in, 9);
-        assert_eq!(result.quality, 2);
-    }
-
-    #[test]
-    fn backstage_pass_quality_should_increase_by_2_when_sellin_is_less_than_10_but_larger_than_5(
-    ) {
-        let behavior = LegacyBehavior {};
-        let result = behavior.update(&Item::new(
-            "Backstage passes to a TAFKAL80ETC concert",
-            7,
-            0,
-        ));
-
-        assert_eq!(result.sell_in, 6);
-        assert_eq!(result.quality, 2);
-    }
-
-    #[test]
-    fn backstage_pass_quality_should_increase_by_3_when_sellin_is_5() {
-        let behavior = LegacyBehavior {};
-        let result = behavior.update(&Item::new(
-            "Backstage passes to a TAFKAL80ETC concert",
-            5,
-            0,
-        ));
-
-        assert_eq!(result.sell_in, 4);
-        assert_eq!(result.quality, 3);
-    }
-
-    #[test]
-    fn backstage_pass_quality_should_increase_by_2_when_sellin_is_less_than_5_but_larger_than_0(
-    ) {
-        let behavior = LegacyBehavior {};
-        let result = behavior.update(&Item::new(
-            "Backstage passes to a TAFKAL80ETC concert",
-            3,
-            0,
-        ));
-
-        assert_eq!(result.sell_in, 2);
-        assert_eq!(result.quality, 3);
-    }
-
-    #[test]
-    fn backstage_pass_quality_should_be_0_when_sellin_is_0() {
-        let behavior = LegacyBehavior {};
-        let result = behavior.update(&Item::new(
-            "Backstage passes to a TAFKAL80ETC concert",
-            0,
-            8,
-        ));
-
-        assert_eq!(result.sell_in, -1);
-        assert_eq!(result.quality, 0);
-    }
-
-    #[test]
-    fn backstage_pass_quality_doesnt_go_above_50() {
-        let behavior = LegacyBehavior {};
-        let result = behavior.update(&Item::new(
-            "Backstage passes to a TAFKAL80ETC concert",
-            4,
-            50,
-        ));
-
-        assert_eq!(result.sell_in, 3);
-        assert_eq!(result.quality, 50);
     }
 }
