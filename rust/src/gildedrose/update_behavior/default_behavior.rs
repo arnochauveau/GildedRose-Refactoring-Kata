@@ -1,35 +1,36 @@
+use std::cmp::max;
+
 use crate::gildedrose::{item::Item, update_behavior::UpdateBehavior};
 
-pub struct LegacyBehavior;
+pub struct DefaultBehavior;
 
-impl UpdateBehavior for LegacyBehavior {
+impl UpdateBehavior for DefaultBehavior {
     fn update(
         &self,
         item: &Item,
     ) -> Item {
         let mut owned_item = item.clone();
-        if owned_item.quality > 0 {
-            owned_item.quality = owned_item.quality - 1;
-        }
+
+        let amount_to_decrease = match owned_item.sell_in {
+            ..=0 => 2,
+            1.. => 1,
+        };
+
+        owned_item.quality = max(owned_item.quality - amount_to_decrease, 0);
 
         owned_item.sell_in = owned_item.sell_in - 1;
 
-        if owned_item.sell_in < 0 {
-            if owned_item.quality > 0 {
-                owned_item.quality = owned_item.quality - 1;
-            }
-        }
         owned_item
     }
 }
 
 #[cfg(test)]
-mod legacy_behavior_tests {
+mod default_behavior_tests {
     use super::*;
 
     #[test]
     pub fn quality_and_sellin_decrease_for_standard_items() {
-        let behavior = LegacyBehavior {};
+        let behavior = DefaultBehavior {};
         let result = behavior.update(&Item::new("standard item", 4, 4));
 
         assert_eq!(result.sell_in, 3);
@@ -38,7 +39,7 @@ mod legacy_behavior_tests {
 
     #[test]
     pub fn double_quality_degradation_sellin_equal_to_zero() {
-        let behavior = LegacyBehavior {};
+        let behavior = DefaultBehavior {};
         let result = behavior.update(&Item::new("standard item", 0, 4));
 
         assert_eq!(result.sell_in, -1);
@@ -47,7 +48,7 @@ mod legacy_behavior_tests {
 
     #[test]
     pub fn double_quality_degradation_sellin_lower_than_zero() {
-        let behavior = LegacyBehavior {};
+        let behavior = DefaultBehavior {};
         let result = behavior.update(&Item::new("standard item", -1, 4));
 
         assert_eq!(result.sell_in, -2);
@@ -56,7 +57,7 @@ mod legacy_behavior_tests {
 
     #[test]
     fn quality_cant_degrade_below_zero() {
-        let behavior = LegacyBehavior {};
+        let behavior = DefaultBehavior {};
         let result = behavior.update(&Item::new("standard item", 2, 0));
 
         assert_eq!(result.sell_in, 1);
