@@ -2,6 +2,7 @@ use std::cmp::max;
 
 use crate::gildedrose::{item::Item, update_behavior::UpdateBehavior};
 
+pub static DEFAULT_BEHAVIOR: DefaultBehavior = DefaultBehavior {};
 pub struct DefaultBehavior;
 
 impl UpdateBehavior for DefaultBehavior {
@@ -30,8 +31,7 @@ mod default_behavior_tests {
 
     #[test]
     pub fn quality_and_sellin_decrease_for_standard_items() {
-        let behavior = DefaultBehavior {};
-        let result = behavior.update(&Item::new("standard item", 4, 4));
+        let result = DEFAULT_BEHAVIOR.update(&Item::new("standard item", 4, 4));
 
         assert_eq!(result.sell_in, 3);
         assert_eq!(result.quality, 3);
@@ -39,8 +39,7 @@ mod default_behavior_tests {
 
     #[test]
     pub fn double_quality_degradation_sellin_equal_to_zero() {
-        let behavior = DefaultBehavior {};
-        let result = behavior.update(&Item::new("standard item", 0, 4));
+        let result = DEFAULT_BEHAVIOR.update(&Item::new("standard item", 0, 4));
 
         assert_eq!(result.sell_in, -1);
         assert_eq!(result.quality, 2);
@@ -48,8 +47,8 @@ mod default_behavior_tests {
 
     #[test]
     pub fn double_quality_degradation_sellin_lower_than_zero() {
-        let behavior = DefaultBehavior {};
-        let result = behavior.update(&Item::new("standard item", -1, 4));
+        let result =
+            DEFAULT_BEHAVIOR.update(&Item::new("standard item", -1, 4));
 
         assert_eq!(result.sell_in, -2);
         assert_eq!(result.quality, 2);
@@ -57,8 +56,7 @@ mod default_behavior_tests {
 
     #[test]
     fn quality_cant_degrade_below_zero() {
-        let behavior = DefaultBehavior {};
-        let result = behavior.update(&Item::new("standard item", 2, 0));
+        let result = DEFAULT_BEHAVIOR.update(&Item::new("standard item", 2, 0));
 
         assert_eq!(result.sell_in, 1);
         assert_eq!(result.quality, 0);

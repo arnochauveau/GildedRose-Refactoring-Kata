@@ -2,6 +2,8 @@ use std::cmp::max;
 
 use crate::gildedrose::{item::Item, update_behavior::UpdateBehavior};
 
+pub static CONJURED_ITEM_BEHAVIOR: ConjuredItemBehavior =
+    ConjuredItemBehavior {};
 pub struct ConjuredItemBehavior;
 impl UpdateBehavior for ConjuredItemBehavior {
     fn update(
@@ -28,8 +30,11 @@ mod conjured_item_tests {
 
     #[test]
     fn should_decrease_with_2_with_sellin_above_0() {
-        let behavior = ConjuredItemBehavior {};
-        let result = behavior.update(&Item::new("Conjured Mana Cake", 4, 30));
+        let result = CONJURED_ITEM_BEHAVIOR.update(&Item::new(
+            "Conjured Mana Cake",
+            4,
+            30,
+        ));
 
         assert_eq!(result.sell_in, 3);
         assert_eq!(result.quality, 28);
@@ -37,8 +42,11 @@ mod conjured_item_tests {
 
     #[test]
     fn should_decrease_with_4_with_sellin_0() {
-        let behavior = ConjuredItemBehavior {};
-        let result = behavior.update(&Item::new("Conjured Mana Cake", 0, 30));
+        let result = CONJURED_ITEM_BEHAVIOR.update(&Item::new(
+            "Conjured Mana Cake",
+            0,
+            30,
+        ));
 
         assert_eq!(result.sell_in, -1);
         assert_eq!(result.quality, 26);
@@ -46,8 +54,11 @@ mod conjured_item_tests {
 
     #[test]
     fn should_decrease_with_4_with_sellin_below_0() {
-        let behavior = ConjuredItemBehavior {};
-        let result = behavior.update(&Item::new("Conjured Mana Cake", -1, 30));
+        let result = CONJURED_ITEM_BEHAVIOR.update(&Item::new(
+            "Conjured Mana Cake",
+            -1,
+            30,
+        ));
 
         assert_eq!(result.sell_in, -2);
         assert_eq!(result.quality, 26);
@@ -55,8 +66,11 @@ mod conjured_item_tests {
 
     #[test]
     fn should_not_go_under_0_with_sellin_above_0() {
-        let behavior = ConjuredItemBehavior {};
-        let result = behavior.update(&Item::new("Conjured Mana Cake", 4, 1));
+        let result = CONJURED_ITEM_BEHAVIOR.update(&Item::new(
+            "Conjured Mana Cake",
+            4,
+            1,
+        ));
 
         assert_eq!(result.sell_in, 3);
         assert_eq!(result.quality, 0);
@@ -64,8 +78,11 @@ mod conjured_item_tests {
 
     #[test]
     fn should_not_go_under_0_with_sellin_0() {
-        let behavior = ConjuredItemBehavior {};
-        let result = behavior.update(&Item::new("Conjured Mana Cake", 0, 3));
+        let result = CONJURED_ITEM_BEHAVIOR.update(&Item::new(
+            "Conjured Mana Cake",
+            0,
+            3,
+        ));
 
         assert_eq!(result.sell_in, -1);
         assert_eq!(result.quality, 0);
@@ -73,8 +90,11 @@ mod conjured_item_tests {
 
     #[test]
     fn should_not_go_under_0_with_sellin_below_0() {
-        let behavior = ConjuredItemBehavior {};
-        let result = behavior.update(&Item::new("Conjured Mana Cake", -1, 3));
+        let result = CONJURED_ITEM_BEHAVIOR.update(&Item::new(
+            "Conjured Mana Cake",
+            -1,
+            3,
+        ));
 
         assert_eq!(result.sell_in, -2);
         assert_eq!(result.quality, 0);

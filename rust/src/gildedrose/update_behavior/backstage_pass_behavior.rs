@@ -2,6 +2,8 @@ use std::cmp::min;
 
 use crate::gildedrose::{item::Item, update_behavior::UpdateBehavior};
 
+pub static BACKSTAGE_PASS_BEHAVIOR: BackstagePassBehavior =
+    BackstagePassBehavior {};
 pub struct BackstagePassBehavior;
 
 impl UpdateBehavior for BackstagePassBehavior {
@@ -36,8 +38,7 @@ mod tests {
 
     #[test]
     fn quality_should_increase_by_1_when_sellin_is_larger_than_10() {
-        let behavior = BackstagePassBehavior {};
-        let result = behavior.update(&Item::new(
+        let result = BACKSTAGE_PASS_BEHAVIOR.update(&Item::new(
             "Backstage passes to a TAFKAL80ETC concert",
             11,
             0,
@@ -49,8 +50,7 @@ mod tests {
 
     #[test]
     fn quality_should_increase_by_2_when_sellin_is_10() {
-        let behavior = BackstagePassBehavior {};
-        let result = behavior.update(&Item::new(
+        let result = BACKSTAGE_PASS_BEHAVIOR.update(&Item::new(
             "Backstage passes to a TAFKAL80ETC concert",
             10,
             0,
@@ -63,8 +63,7 @@ mod tests {
     #[test]
     fn quality_should_increase_by_2_when_sellin_is_less_than_10_but_larger_than_5(
     ) {
-        let behavior = BackstagePassBehavior {};
-        let result = behavior.update(&Item::new(
+        let result = BACKSTAGE_PASS_BEHAVIOR.update(&Item::new(
             "Backstage passes to a TAFKAL80ETC concert",
             7,
             0,
@@ -76,8 +75,7 @@ mod tests {
 
     #[test]
     fn quality_should_increase_by_3_when_sellin_is_5() {
-        let behavior = BackstagePassBehavior {};
-        let result = behavior.update(&Item::new(
+        let result = BACKSTAGE_PASS_BEHAVIOR.update(&Item::new(
             "Backstage passes to a TAFKAL80ETC concert",
             5,
             0,
@@ -90,8 +88,7 @@ mod tests {
     #[test]
     fn quality_should_increase_by_2_when_sellin_is_less_than_5_but_larger_than_0(
     ) {
-        let behavior = BackstagePassBehavior {};
-        let result = behavior.update(&Item::new(
+        let result = BACKSTAGE_PASS_BEHAVIOR.update(&Item::new(
             "Backstage passes to a TAFKAL80ETC concert",
             3,
             0,
@@ -103,8 +100,7 @@ mod tests {
 
     #[test]
     fn quality_should_be_0_when_sellin_is_0() {
-        let behavior = BackstagePassBehavior {};
-        let result = behavior.update(&Item::new(
+        let result = BACKSTAGE_PASS_BEHAVIOR.update(&Item::new(
             "Backstage passes to a TAFKAL80ETC concert",
             0,
             8,
@@ -116,8 +112,7 @@ mod tests {
 
     #[test]
     fn quality_doesnt_go_above_50() {
-        let behavior = BackstagePassBehavior {};
-        let result = behavior.update(&Item::new(
+        let result = BACKSTAGE_PASS_BEHAVIOR.update(&Item::new(
             "Backstage passes to a TAFKAL80ETC concert",
             4,
             50,
